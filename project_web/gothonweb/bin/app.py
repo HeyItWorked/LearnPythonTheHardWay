@@ -1,17 +1,20 @@
 import web
 urls = (
-    '/', 'Index'
+    '/hello', 'Index'
 )
 
 app = web.application(urls, globals())
 
-render = web.template.render('templates/')
+render = web.template.render('templates/', base="layout")
 
 
 class Index(object):
     def GET(self):
-        greeting = "Hello World"
-        # render.index because it's invoking index.html, this can be render. any html file
+        return render.hello_form()
+
+    def POST(self):
+        form = web.input(name="Nobody", greet="Hello")
+        greeting = "%s, %s" % (form.greet, form.name)
         return render.index(greeting=greeting)
 
 
